@@ -1,5 +1,6 @@
 package server;
 
+import factory.RequestHandlerFactory;
 import handler.GetRequestHandler;
 import handler.PostRequestHandler;
 import handler.RequestHandler;
@@ -25,14 +26,6 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 @Slf4j
 public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     private static final String FAVICON_ICO = "/favicon.ico";
-    private final Map<HttpMethod, RequestHandler> requestHandlers;
-
-    public HttpServerHandler() {
-        requestHandlers = new HashMap<>();
-        requestHandlers.put(HttpMethod.GET, new GetRequestHandler());
-        requestHandlers.put(HttpMethod.POST, new PostRequestHandler());
-    }
-
     /**
      * 与 FullHttpRequest 匹配上的信息，走这个方法进行处理
      *
@@ -47,7 +40,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         if (uri.equals(FAVICON_ICO)) {
             return;
         }
-        RequestHandler requestHandler = requestHandlers.get(fullHttpRequest.method());
+        RequestHandler requestHandler = RequestHandlerFactory.create(fullHttpRequest.method());
         Object result = requestHandler.handle(fullHttpRequest);
         FullHttpResponse response = buildHttpResponse(result);
         boolean keepAlive = HttpUtil.isKeepAlive(fullHttpRequest);
