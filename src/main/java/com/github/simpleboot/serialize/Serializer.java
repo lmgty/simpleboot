@@ -1,4 +1,4 @@
-package serialize;
+package com.github.simpleboot.serialize;
 
 /**
  * @author LiuYe

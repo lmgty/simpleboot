@@ -1,7 +1,6 @@
-package serialize;
+package com.github.simpleboot.serialize;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import serialize.Serializer;
 
 import java.io.IOException;
 

@@ -1,19 +1,14 @@
-package server;
+package com.github.simpleboot.server;
 
-import factory.RequestHandlerFactory;
-import handler.GetRequestHandler;
-import handler.PostRequestHandler;
-import handler.RequestHandler;
+import com.github.simpleboot.factory.RequestHandlerFactory;
+import com.github.simpleboot.handler.RequestHandler;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import lombok.extern.slf4j.Slf4j;
-import serialize.JacksonSerialize;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.github.simpleboot.serialize.JacksonSerialize;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
@@ -26,6 +21,7 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 @Slf4j
 public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     private static final String FAVICON_ICO = "/favicon.ico";
+
     /**
      * 与 FullHttpRequest 匹配上的信息，走这个方法进行处理
      *
@@ -34,6 +30,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
      * @throws Exception 异常
      */
     @Override
+    @SuppressWarnings("deprecation")
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws Exception {
         log.info("Handle http request:{}", fullHttpRequest);
         String uri = fullHttpRequest.uri();

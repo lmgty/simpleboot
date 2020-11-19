@@ -1,4 +1,6 @@
-import server.HttpServer;
+package com.github.simpleboot;
+
+import com.github.simpleboot.server.HttpServer;
 
 /**
  * @author LiuYe

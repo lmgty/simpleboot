@@ -1,8 +1,8 @@
-package factory;
+package com.github.simpleboot.factory;
 
-import handler.GetRequestHandler;
-import handler.PostRequestHandler;
-import handler.RequestHandler;
+import com.github.simpleboot.handler.GetRequestHandler;
+import com.github.simpleboot.handler.PostRequestHandler;
+import com.github.simpleboot.handler.RequestHandler;
 import io.netty.handler.codec.http.HttpMethod;
 
 import java.util.HashMap;

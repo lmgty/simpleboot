@@ -1,6 +1,6 @@
-package server;
+package com.github.simpleboot.server;
 
-import common.SystemConstants;
+import com.github.simpleboot.common.SystemConstants;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -9,8 +9,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpRequestDecoder;
-import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +39,7 @@ public class HttpServer {
                                     .addLast("httpServerCodec",new HttpServerCodec())
                                     // 将多个消息转换为单一的FullHttpRequest或者FullHttpResponse
                                     .addLast("aggregator",new HttpObjectAggregator(512*1024))
-                                    .addLast("handler",new HttpServerHandler());
+                                    .addLast("com/github/simpleboot/handler",new HttpServerHandler());
                         }
                     });
 
@@ -50,7 +48,7 @@ public class HttpServer {
             log.info(SystemConstants.LOG_PORT_BANNER ,PORT);
             ch.closeFuture().sync();
         }catch (InterruptedException e){
-            log.error("occur exception when start server:", e);
+            log.error("occur exception when start com.github.simpleboot.server:", e);
         }finally {
             log.error("shut down bossGroup and workerGroup");
             bossGroup.shutdownGracefully();
