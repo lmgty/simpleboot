@@ -1,4 +1,4 @@
-package com.github.simpleboot.scanners;
+package com.github.simpleboot.core.scanners;
 
 import annotation.RestController;
 

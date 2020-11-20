@@ -39,7 +39,7 @@ public class HttpServer {
                                     .addLast("httpServerCodec",new HttpServerCodec())
                                     // 将多个消息转换为单一的FullHttpRequest或者FullHttpResponse
                                     .addLast("aggregator",new HttpObjectAggregator(512*1024))
-                                    .addLast("com/github/simpleboot/handler",new HttpServerHandler());
+                                    .addLast("handler",new HttpServerHandler());
                         }
                     });
 

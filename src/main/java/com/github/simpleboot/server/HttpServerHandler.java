@@ -1,7 +1,7 @@
 package com.github.simpleboot.server;
 
 import com.github.simpleboot.factory.RequestHandlerFactory;
-import com.github.simpleboot.handler.RequestHandler;
+import com.github.simpleboot.core.handler.RequestHandler;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;

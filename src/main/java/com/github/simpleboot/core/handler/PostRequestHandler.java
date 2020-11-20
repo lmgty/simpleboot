@@ -1,4 +1,4 @@
-package com.github.simpleboot.handler;
+package com.github.simpleboot.core.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.handler.codec.http.FullHttpRequest;

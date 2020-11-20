@@ -1,7 +1,6 @@
-package com.github.simpleboot.scanners;
+package com.github.simpleboot.core.scanners;
 
 import annotation.RestController;
-import com.github.simpleboot.serialize.impl.SerializeObject;
 import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Annotation;
@@ -17,8 +16,7 @@ public class AnnotatedClassScannerTest {
 
     @Test
     void should_scan_the_annotated_class() {
-        AnnotatedClassScanner annotatedClassScanner = new AnnotatedClassScanner();
-        Set<Class<?>> annotatedClasses = annotatedClassScanner.scan("com.github.simpleboot.scanners", RestController.class);
+        Set<Class<?>> annotatedClasses = AnnotatedClassScanner.scan("com.github.simpleboot.core.scanners", RestController.class);
         assertEquals(1, annotatedClasses.size());
     }
 

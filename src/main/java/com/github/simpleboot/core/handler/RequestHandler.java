@@ -1,4 +1,4 @@
-package com.github.simpleboot.handler;
+package com.github.simpleboot.core.handler;
 
 import io.netty.handler.codec.http.FullHttpRequest;
 
