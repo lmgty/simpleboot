@@ -32,7 +32,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
     @Override
     @SuppressWarnings("deprecation")
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws Exception {
-        log.info("Handle http request:{}", fullHttpRequest);
+//        log.info("Handle http request:{}", fullHttpRequest);
         String uri = fullHttpRequest.uri();
         if (uri.equals(FAVICON_ICO)) {
             return;

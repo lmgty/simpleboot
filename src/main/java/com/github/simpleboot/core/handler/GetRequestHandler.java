@@ -1,6 +1,9 @@
 package com.github.simpleboot.core.handler;
 
 import annotation.RequestParam;
+import com.github.simpleboot.common.utils.ObjectUtils;
+import com.github.simpleboot.common.utils.ReflectionUtils;
+import com.github.simpleboot.common.utils.UrlUtils;
 import com.github.simpleboot.core.Router;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
@@ -24,7 +27,7 @@ public class GetRequestHandler implements RequestHandler {
     @Override
     public Object handle(FullHttpRequest fullHttpRequest) {
         QueryStringDecoder queryDecoder = new QueryStringDecoder(fullHttpRequest.uri(), CharsetUtil.UTF_8);
-        Map<String, String> queryParams = getQueryParams(queryDecoder);
+        Map<String, String> queryParams = UrlUtils.getQueryParams(queryDecoder.parameters());
         // 获取请求路径，如 "/user"
         String url = queryDecoder.path();
         // 获取目标方法
@@ -34,40 +37,21 @@ public class GetRequestHandler implements RequestHandler {
         }
         log.info("url -> target method [{}]", targetMethod.getName());
         Parameter[] targetMethodParameters = targetMethod.getParameters();
-        List<String> params = new ArrayList<>();
+        List<Object> targetParams = new ArrayList<>();
         for (Parameter parameter : targetMethodParameters) {
             RequestParam requestParam = parameter.getDeclaredAnnotation(RequestParam.class);
             if (requestParam != null) {
                 String requestParameter = requestParam.value();
-                String paramsValue = queryParams.get(requestParameter);
-                if (paramsValue == null) {
+                String requestParameterValue = queryParams.get(requestParameter);
+                if (requestParameterValue == null) {
                     throw new IllegalArgumentException("指定参数" + requestParameter + "不能为空");
                 }
-                params.add(paramsValue);
+                Object param = ObjectUtils.convert(parameter.getType(), requestParameterValue);
+                targetParams.add(param);
             }
         }
-        // 将 url 参数和目标方法的参数对应上
-        Object result = null;
-        try {
-            // 获取声明此方法的对象
-            Object targetObject = targetMethod.getDeclaringClass().newInstance();
-            result = targetMethod.invoke(targetObject, params.toArray());
-        } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            e.printStackTrace();
-        }
 
-        return result;
+        return ReflectionUtils.executeMethod(targetMethod,targetParams.toArray());
     }
 
-    private Map<String, String> getQueryParams(QueryStringDecoder queryDecoder) {
-        Map<String, List<String>> uriAttributes = queryDecoder.parameters();
-        HashMap<String, String> queryParams = new HashMap<>();
-        for (Map.Entry<String, List<String>> attr : uriAttributes.entrySet()) {
-            for (String attrVal : attr.getValue()) {
-                log.info(attr.getKey() + "=" + attrVal);
-                queryParams.put(attr.getKey(), attrVal);
-            }
-        }
-        return queryParams;
-    }
 }

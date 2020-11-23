@@ -1,6 +1,7 @@
 package com.github.demo;
 
 import annotation.GetMapping;
+import annotation.RequestParam;
 import annotation.RestController;
 
 /**
@@ -12,8 +13,8 @@ import annotation.RestController;
 public class UserController {
 
     @GetMapping
-    public User get(){
-        return new User("Tom","EMM");
+    public User get(@RequestParam("name") String name, @RequestParam("age") Integer age) {
+        return new User(name, "EMM", age);
     }
 
 }
