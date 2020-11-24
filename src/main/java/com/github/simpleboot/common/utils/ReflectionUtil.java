@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
  * @data 2020/11/23
  */
 @Slf4j
-public class ReflectionUtils {
+public class ReflectionUtil {
     public static Object executeMethod(Method method, Object... args){
         // 将 url 参数和目标方法的参数对应上
         Object result = null;

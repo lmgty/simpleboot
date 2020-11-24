@@ -1,5 +1,6 @@
 package com.github.simpleboot.server;
 
+import com.github.simpleboot.exception.ErrorResponse;
 import com.github.simpleboot.serialize.JacksonSerialize;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
@@ -29,8 +30,12 @@ public class HttpResponse {
     }
 
 
-    public static FullHttpResponse internalServerError() {
-        byte[] content = jsonSerialize.serialize(INTERNAL_SERVER_ERROR.reasonPhrase());
+    public static FullHttpResponse internalServerError(String path) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                INTERNAL_SERVER_ERROR.code(),
+                INTERNAL_SERVER_ERROR.reasonPhrase(),
+                path);
+        byte[] content = jsonSerialize.serialize(errorResponse);
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1,
                 INTERNAL_SERVER_ERROR,
                 Unpooled.wrappedBuffer(content));
