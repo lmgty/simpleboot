@@ -1,4 +1,4 @@
-package com.github.simpleboot.common;
+package com.github.simpleboot.common.constant;
 
 /**
  * @author LiuYe

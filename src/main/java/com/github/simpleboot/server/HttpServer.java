@@ -1,6 +1,6 @@
 package com.github.simpleboot.server;
 
-import com.github.simpleboot.common.SystemConstants;
+import com.github.simpleboot.common.constant.SystemConstants;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
