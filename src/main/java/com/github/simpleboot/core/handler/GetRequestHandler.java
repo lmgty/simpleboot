@@ -1,13 +1,11 @@
 package com.github.simpleboot.core.handler;
 
 import annotation.RequestParam;
+import com.github.simpleboot.common.utils.HttpRequestUtil;
 import com.github.simpleboot.common.utils.ObjectUtil;
 import com.github.simpleboot.common.utils.ReflectionUtil;
-import com.github.simpleboot.common.utils.UrlUtil;
 import com.github.simpleboot.core.Router;
 import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.QueryStringDecoder;
-import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
@@ -24,10 +22,11 @@ import java.util.Map;
 public class GetRequestHandler implements RequestHandler {
     @Override
     public Object handle(FullHttpRequest fullHttpRequest) {
+        // /user?name=Bo&g=44&address=北京
         String requestUri = fullHttpRequest.uri();
-        Map<String, String> queryParams = UrlUtil.getQueryParams(requestUri);
+        Map<String, String> queryParams = HttpRequestUtil.getQueryParams(requestUri);
         // 获取请求路径，如 "/user"
-        String requestPath = UrlUtil.getRequestPath(requestUri);
+        String requestPath = HttpRequestUtil.getRequestPath(requestUri);
         // 获取目标方法
         Method targetMethod = Router.getMappings.get(requestPath);
         if (targetMethod == null) {

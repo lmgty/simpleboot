@@ -1,5 +1,6 @@
 package com.github.simpleboot.common.utils;
 
+import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import io.netty.util.CharsetUtil;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  * @author LiuYe
  * @data 2020/11/23
  */
-public class UrlUtil {
+public class HttpRequestUtil {
     public static Map<String, String> getQueryParams(String uri) {
         QueryStringDecoder queryDecoder = new QueryStringDecoder(uri, CharsetUtil.UTF_8);
         Map<String, List<String>> parameters = queryDecoder.parameters();
@@ -27,5 +28,11 @@ public class UrlUtil {
     public static String getRequestPath(String uri) {
         QueryStringDecoder queryDecoder = new QueryStringDecoder(uri, CharsetUtil.UTF_8);
         return queryDecoder.path();
+    }
+
+    public static String getContentType(HttpHeaders headers) {
+        String typeStr = headers.get("Content-type");
+        String[] list = typeStr.split(";");
+        return list[0];
     }
 }
