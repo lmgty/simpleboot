@@ -30,11 +30,12 @@ public class HttpResponse {
     }
 
 
-    public static FullHttpResponse internalServerError(String path) {
+    public static FullHttpResponse internalServerError(String url, String message) {
         ErrorResponse errorResponse = new ErrorResponse(
                 INTERNAL_SERVER_ERROR.code(),
                 INTERNAL_SERVER_ERROR.reasonPhrase(),
-                path);
+                message,
+                url);
         byte[] content = jsonSerialize.serialize(errorResponse);
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1,
                 INTERNAL_SERVER_ERROR,

@@ -24,16 +24,16 @@ import java.util.Map;
 public class GetRequestHandler implements RequestHandler {
     @Override
     public Object handle(FullHttpRequest fullHttpRequest) {
-        QueryStringDecoder queryDecoder = new QueryStringDecoder(fullHttpRequest.uri(), CharsetUtil.UTF_8);
-        Map<String, String> queryParams = UrlUtil.getQueryParams(queryDecoder.parameters());
+        String requestUri = fullHttpRequest.uri();
+        Map<String, String> queryParams = UrlUtil.getQueryParams(requestUri);
         // 获取请求路径，如 "/user"
-        String url = queryDecoder.path();
+        String requestPath = UrlUtil.getRequestPath(requestUri);
         // 获取目标方法
-        Method targetMethod = Router.getMappings.get(url);
+        Method targetMethod = Router.getMappings.get(requestPath);
         if (targetMethod == null) {
             return null;
         }
-        log.info("url -> target method [{}]", targetMethod.getName());
+        log.info("requestUri -> target method [{}]", targetMethod.getName());
         Parameter[] targetMethodParameters = targetMethod.getParameters();
         List<Object> targetParams = new ArrayList<>();
         for (Parameter parameter : targetMethodParameters) {

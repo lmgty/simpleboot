@@ -1,5 +1,6 @@
 package com.github.simpleboot.server;
 
+import com.github.simpleboot.common.utils.UrlUtil;
 import com.github.simpleboot.factory.RequestHandlerFactory;
 import com.github.simpleboot.core.handler.RequestHandler;
 import io.netty.channel.ChannelFutureListener;
@@ -40,7 +41,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
              response = HttpResponse.ok(result);
         }catch (IllegalArgumentException e){
             e.printStackTrace();
-            response = HttpResponse.internalServerError(uri);
+            String requestPath = UrlUtil.getRequestPath(fullHttpRequest.uri());
+            response = HttpResponse.internalServerError(requestPath, e.toString());
         }
         boolean keepAlive = HttpUtil.isKeepAlive(fullHttpRequest);
         if (!keepAlive) {
