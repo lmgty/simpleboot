@@ -17,7 +17,7 @@ public class PathVariableParameterResolver implements ParameterResolver {
         PathVariable pathVariable = parameter.getDeclaredAnnotation(PathVariable.class);
         // 获取占位符名称
         String requestParameter = pathVariable.value();
-        String requestParameterValue = methodDetail.getQueryParameterMappings().get(requestParameter);
+        String requestParameterValue = methodDetail.getUrlParameterMappings().get(requestParameter);
         return ObjectUtil.convert(parameter.getType(),requestParameterValue);
     }
 }
