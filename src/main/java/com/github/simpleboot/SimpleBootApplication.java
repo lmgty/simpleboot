@@ -1,6 +1,6 @@
 package com.github.simpleboot;
 
-import com.github.simpleboot.core.Router;
+import com.github.simpleboot.core.ApplicationContext;
 import com.github.simpleboot.server.HttpServer;
 
 /**
@@ -9,8 +9,8 @@ import com.github.simpleboot.server.HttpServer;
  */
 public class SimpleBootApplication {
     public static void main(String[] args) {
-        Router router = new Router();
-        router.loadRoutes("com.github.demo");
+        ApplicationContext applicationContext =  ApplicationContext.getInstance();
+        applicationContext.loadRoutes("com.github.demo");
         HttpServer httpServer = new HttpServer();
         httpServer.start();
     }

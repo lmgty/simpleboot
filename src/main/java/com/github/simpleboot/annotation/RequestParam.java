@@ -1,4 +1,4 @@
-package annotation;
+package com.github.simpleboot.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,9 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * @author LiuYe
- * @data 2020/12/8
+ * @data 2020/11/20
  */
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequestBody {
+public @interface RequestParam {
+    String value();
 }

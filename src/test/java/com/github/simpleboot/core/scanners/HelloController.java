@@ -1,6 +1,6 @@
 package com.github.simpleboot.core.scanners;
 
-import annotation.RestController;
+import com.github.simpleboot.annotation.RestController;
 
 /**
  * @author LiuYe

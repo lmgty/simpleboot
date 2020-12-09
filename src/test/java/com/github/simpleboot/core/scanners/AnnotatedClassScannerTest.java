@@ -1,6 +1,6 @@
 package com.github.simpleboot.core.scanners;
 
-import annotation.RestController;
+import com.github.simpleboot.annotation.RestController;
 import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Annotation;

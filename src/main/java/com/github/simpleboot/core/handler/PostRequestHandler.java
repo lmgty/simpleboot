@@ -1,12 +1,17 @@
 package com.github.simpleboot.core.handler;
 
-import annotation.RequestBody;
+import com.github.simpleboot.annotation.RequestBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.simpleboot.common.utils.HttpRequestUtil;
+import com.github.simpleboot.common.utils.UrlUtil;
 import com.github.simpleboot.common.utils.ReflectionUtil;
-import com.github.simpleboot.core.Router;
+import com.github.simpleboot.core.ApplicationContext;
+import com.github.simpleboot.core.entity.MethodDetail;
+import com.github.simpleboot.core.resolver.ParameterResolver;
+import com.github.simpleboot.core.resolver.ParameterResolverFactory;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpMethod;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,31 +28,29 @@ import java.util.List;
 public class PostRequestHandler implements RequestHandler {
 
     private static final String APPLICATION_JSON = "application/json";
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public Object handle(FullHttpRequest fullHttpRequest) {
         String requestUri = fullHttpRequest.uri();
-        String requestPath = HttpRequestUtil.getRequestPath(requestUri);
-        Method targetMethod = Router.postMappings.get(requestPath);
-        if (targetMethod == null) {
+        String requestPath = UrlUtil.getRequestPath(requestUri);
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        MethodDetail methodDetail = applicationContext.getMethodDetail(requestPath, HttpMethod.POST);
+        if (methodDetail == null) {
             return null;
         }
-        String contentType = HttpRequestUtil.getContentType(fullHttpRequest.headers());
+        Method targetMethod = methodDetail.getMethod();
+        String contentType = this.getContentType(fullHttpRequest.headers());
 
         List<Object> targetMethodParams = new ArrayList<>();
         if (APPLICATION_JSON.equals(contentType)) {
             String json = fullHttpRequest.content().toString(CharsetUtil.UTF_8);
+            methodDetail.setJson(json);
             Parameter[] targetMethodParameters = targetMethod.getParameters();
             for (Parameter parameter : targetMethodParameters) {
-                RequestBody requestBody = parameter.getDeclaredAnnotation(RequestBody.class);
-                if (requestBody != null) {
-                    try {
-                        Object obj = objectMapper.readValue(json, parameter.getType());
-                        targetMethodParams.add(obj);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
+                ParameterResolver parameterResolver = ParameterResolverFactory.get(parameter);
+                if (parameterResolver != null) {
+                    Object param = parameterResolver.resolve(methodDetail, parameter);
+                    targetMethodParams.add(param);
                 }
             }
         } else {
@@ -55,5 +58,11 @@ public class PostRequestHandler implements RequestHandler {
         }
 
         return ReflectionUtil.executeMethod(targetMethod, targetMethodParams.toArray());
+    }
+
+    private String getContentType(HttpHeaders headers) {
+        String typeStr = headers.get("Content-type");
+        String[] list = typeStr.split(";");
+        return list[0];
     }
 }

@@ -1,4 +1,4 @@
-package annotation;
+package com.github.simpleboot.annotation;
 
 import java.lang.annotation.*;
 
