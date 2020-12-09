@@ -10,7 +10,7 @@ simpleboot 是一个 模仿 Spring Boot 写的一个轻量级的 HTTP 框架。
 - [x] `@PostMapping ` ：处理 Post 请求
 - [x] `@RequestBody` : 接收前端传递给后端的json字符串
 - [x] `@RequestParam` ：获取Get请求的 URL 查询参数
-- [ ] `@PathVariable` :  获取 URL 中的参数/占位符
+- [x] `@PathVariable` :  获取 URL 中的参数/占位符
 
 ### IOC
 
