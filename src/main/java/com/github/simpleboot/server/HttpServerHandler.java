@@ -37,9 +37,9 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         Object result;
         FullHttpResponse response;
         try {
-             result = requestHandler.handle(fullHttpRequest);
-             response = HttpResponse.ok(result);
-        }catch (IllegalArgumentException e){
+            result = requestHandler.handle(fullHttpRequest);
+            response = HttpResponse.ok(result);
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
             String requestPath = UrlUtil.getRequestPath(fullHttpRequest.uri());
             response = HttpResponse.internalServerError(requestPath, e.toString());

@@ -36,20 +36,20 @@ public class HttpServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline()
-                                    .addLast("httpServerCodec",new HttpServerCodec())
+                                    .addLast("httpServerCodec", new HttpServerCodec())
                                     // 将多个消息转换为单一的FullHttpRequest或者FullHttpResponse
-                                    .addLast("aggregator",new HttpObjectAggregator(512*1024))
-                                    .addLast("handler",new HttpServerHandler());
+                                    .addLast("aggregator", new HttpObjectAggregator(512 * 1024))
+                                    .addLast("handler", new HttpServerHandler());
                         }
                     });
 
-            Channel ch = b.bind(INETHOST,PORT).sync().channel();
+            Channel ch = b.bind(INETHOST, PORT).sync().channel();
 
-            log.info(SystemConstants.LOG_PORT_BANNER ,PORT);
+            log.info(SystemConstants.LOG_PORT_BANNER, PORT);
             ch.closeFuture().sync();
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             log.error("occur exception when start com.github.simpleboot.server:", e);
-        }finally {
+        } finally {
             log.error("shut down bossGroup and workerGroup");
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

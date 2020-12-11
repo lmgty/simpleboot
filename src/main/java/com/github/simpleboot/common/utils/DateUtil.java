@@ -11,7 +11,6 @@ import java.util.Locale;
  * @data 2020/11/24
  */
 public class DateUtil {
-    FormatStyle dateTimeStyle;
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
                     .withLocale(Locale.CHINA)

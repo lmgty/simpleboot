@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * @author LiuYe
  * @data 2020/11/20
  */
-public class ApplicationContext {
+public final class ApplicationContext {
     private static final ApplicationContext INSTANCE = new ApplicationContext();
 
     /**

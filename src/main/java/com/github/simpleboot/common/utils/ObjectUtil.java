@@ -8,7 +8,7 @@ import java.beans.PropertyEditorManager;
  * @data 2020/11/23
  */
 public class ObjectUtil {
-    public static Object convert(Class<?> targetType, String text){
+    public static Object convert(Class<?> targetType, String text) {
         PropertyEditor editor = PropertyEditorManager.findEditor(targetType);
         // void setAsText(String text)：用一个字符串去更新属性的内部值，这个字符串一般从外部属性编辑器传入；
         editor.setAsText(text);

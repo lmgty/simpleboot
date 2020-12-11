@@ -11,14 +11,14 @@ import java.util.Map;
  * @data 2020/11/19
  */
 public class RequestHandlerFactory {
-    private static final Map<HttpMethod, RequestHandler> requestHandlers = new HashMap<>();
+    private static final Map<HttpMethod, RequestHandler> REQUEST_HANDLERS = new HashMap<>();
 
     static {
-        requestHandlers.put(HttpMethod.GET, new GetRequestHandler());
-        requestHandlers.put(HttpMethod.POST, new PostRequestHandler());
+        REQUEST_HANDLERS.put(HttpMethod.GET, new GetRequestHandler());
+        REQUEST_HANDLERS.put(HttpMethod.POST, new PostRequestHandler());
     }
 
-    public static RequestHandler create(HttpMethod httpMethod){
-        return requestHandlers.get(httpMethod);
+    public static RequestHandler create(HttpMethod httpMethod) {
+        return REQUEST_HANDLERS.get(httpMethod);
     }
 }

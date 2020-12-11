@@ -57,7 +57,7 @@ public class UrlUtil {
             String urlParam = urlParams[i].replace("{", "")
                     .replace("}", "");
             // name -> 盖伦
-            urlParameterMappings.put(urlParam,requestParams[i]);
+            urlParameterMappings.put(urlParam, requestParams[i]);
         }
         return urlParameterMappings;
     }

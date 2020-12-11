@@ -17,10 +17,13 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
  * @data 2020/11/24
  */
 public class HttpResponse {
-    private static final JacksonSerialize jsonSerialize = new JacksonSerialize();
+    private static final JacksonSerialize JSON_SERIALIZE;
+    static {
+        JSON_SERIALIZE = new JacksonSerialize();
+    }
 
     public static FullHttpResponse ok(Object result) {
-        byte[] content = jsonSerialize.serialize(result);
+        byte[] content = JSON_SERIALIZE.serialize(result);
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1,
                 OK,
                 Unpooled.wrappedBuffer(content));
@@ -36,7 +39,7 @@ public class HttpResponse {
                 INTERNAL_SERVER_ERROR.reasonPhrase(),
                 message,
                 url);
-        byte[] content = jsonSerialize.serialize(errorResponse);
+        byte[] content = JSON_SERIALIZE.serialize(errorResponse);
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1,
                 INTERNAL_SERVER_ERROR,
                 Unpooled.wrappedBuffer(content));

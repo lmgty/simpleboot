@@ -22,14 +22,14 @@ public class UserController {
     }
 
     @GetMapping("/{name}")
-    public User get(@PathVariable("name") String name){
+    public User get(@PathVariable("name") String name) {
         System.out.println(name);
         return users.get(0);
     }
 
     @PostMapping
-    public List<User> create(@RequestBody UserDto userDto){
-        users.add(new User(userDto.getName(),userDto.getDes(),userDto.getAge()));
+    public List<User> create(@RequestBody UserDto userDto) {
+        users.add(new User(userDto.getName(), userDto.getDes(), userDto.getAge()));
         return users;
     }
 

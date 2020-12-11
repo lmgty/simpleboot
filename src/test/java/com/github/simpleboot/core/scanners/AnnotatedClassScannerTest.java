@@ -21,10 +21,10 @@ public class AnnotatedClassScannerTest {
     }
 
     @Test
-    void reflection_Test(){
+    void reflection_Test() {
         Class<?> so = HelloController.class;
         Annotation[] annotations = so.getAnnotations();
-        assertEquals(1,annotations.length);
+        assertEquals(1, annotations.length);
     }
 
 }

@@ -18,6 +18,6 @@ public class PathVariableParameterResolver implements ParameterResolver {
         // 获取占位符名称
         String requestParameter = pathVariable.value();
         String requestParameterValue = methodDetail.getUrlParameterMappings().get(requestParameter);
-        return ObjectUtil.convert(parameter.getType(),requestParameterValue);
+        return ObjectUtil.convert(parameter.getType(), requestParameterValue);
     }
 }

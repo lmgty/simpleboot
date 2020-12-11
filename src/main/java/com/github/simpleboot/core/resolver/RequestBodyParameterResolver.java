@@ -19,9 +19,9 @@ public class RequestBodyParameterResolver implements ParameterResolver {
     public Object resolve(MethodDetail methodDetail, Parameter parameter) {
         Object object = null;
         RequestBody requestBody = parameter.getDeclaredAnnotation(RequestBody.class);
-        if (requestBody != null){
+        if (requestBody != null) {
             try {
-                object = OBJECT_MAPPER.readValue(methodDetail.getJson(),parameter.getType());
+                object = OBJECT_MAPPER.readValue(methodDetail.getJson(), parameter.getType());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }

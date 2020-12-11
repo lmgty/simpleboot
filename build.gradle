@@ -1,9 +1,13 @@
 plugins {
     id 'java'
+    id "checkstyle"
+    id "com.github.spotbugs" version "4.3.0"
 }
 
 group 'com.yufa.xz.ly'
 version '1.0-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenLocal()
@@ -15,10 +19,6 @@ repositories {
 test {
     useJUnitPlatform()
 }
-test {
-    useJUnitPlatform()
-}
-
 def jacksonVersion = '2.11.2'
 def nettyVersion = '4.1.42.Final'
 def slf4jVersion = '1.7.25'
@@ -26,10 +26,6 @@ def lombokVersion = '1.18.12'
 def junitVersion = 'junit-jupiter-api:5.6.1'
 def commonsCodecVersion = '1.14'
 def reflectionsVersion = '0.9.12'
-def cglibVersion = '3.3.0'
-def yamlVersion = '1.23'
-def validationApiVersion = '2.0.1.Final'
-def hibernateValidatorVersion = '6.1.5.Final'
 
 dependencies {
     // json解析库：jackson
@@ -43,14 +39,6 @@ dependencies {
     compile "org.reflections:reflections:${reflectionsVersion}"
     // 编解码：commons-codec
     compile "commons-codec:commons-codec:${commonsCodecVersion}"
-    // 动态代理：cglib
-    compile "cglib:cglib:${cglibVersion}"
-    //yaml配置读取
-    compile "org.yaml:snakeyaml:${yamlVersion}"
-    // BEAN验证：JSR-303
-    compile "javax.validation:validation-api:${validationApiVersion}"
-    // BEAN验证：Hibernate的Validator实现
-    compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
     // 语法糖：lombok
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
@@ -59,6 +47,9 @@ dependencies {
     // 测试：junit5
     testImplementation "org.junit.jupiter:${junitVersion}"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    // 接口测试：rest-assured
-    testImplementation 'io.rest-assured:rest-assured:4.3.1'
 }
+
+apply from: rootProject.file("gradle/git-hooks.gradle")
+apply from: rootProject.file("gradle/checkstyle.gradle")
+apply from: rootProject.file("gradle/pmd.gradle")
+apply from: rootProject.file("gradle/spotbugs.gradle")
