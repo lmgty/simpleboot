@@ -2,9 +2,7 @@ package com.github.demo;
 
 import com.github.simpleboot.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author LiuYe
@@ -14,23 +12,30 @@ import java.util.List;
 @RestController("/user")
 public class UserController {
 
-    private static List<User> users = new ArrayList<>(Collections.singletonList(new User("盖伦", "德玛西亚", 18)));
+    private static Map<Integer, User> users;
+    private static Integer id;
+
+    {
+        users = new HashMap<>();
+        users.put(1, new User("Lue", "SH", 22));
+        id = 2;
+    }
 
     @GetMapping
     public User get(@RequestParam("name") String name, @RequestParam("age") Integer age) {
         return new User(name, "EMM", age);
     }
 
-    @GetMapping("/{name}")
-    public User get(@PathVariable("name") String name) {
-        System.out.println(name);
-        return users.get(0);
+    @GetMapping("/{id}")
+    public User get(@PathVariable("id") Integer id) {
+
+        return users.get(id);
     }
 
     @PostMapping
     public List<User> create(@RequestBody UserDto userDto) {
-        users.add(new User(userDto.getName(), userDto.getDes(), userDto.getAge()));
-        return users;
+        users.put(id, new User(userDto.getName(), userDto.getDes(), userDto.getAge()));
+        return new ArrayList<>(users.values());
     }
 
 }
