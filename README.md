@@ -1,7 +1,7 @@
 # simpleboot
 
 ## 介绍
-
+学习 javaGuide，动手造个轮子。
 simpleboot 是一个 模仿 Spring Boot 写的一个轻量级的 HTTP 框架。
 
 ### Get请求和POST请求处理
@@ -25,7 +25,7 @@ simpleboot 是一个 模仿 Spring Boot 写的一个轻量级的 HTTP 框架。
 ### 代码质量
 
 - [x] 集成 checkstyle
-- [x] 集成 spotbugs （*遇到了一点小坑，将gradle 版本升级为 6.6.1 解决*）
+- [x] 集成 spotbugs
 
 
 ## 功能演示
